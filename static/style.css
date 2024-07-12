@@ -1,43 +1,18 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
+/* style.css */
+
+/* オプション: テーブルのスタイル調整 */
+.table-container {
+    overflow-x: auto; /* 横スクロールバーを表示 */
 }
 
-.container {
-    max-width: 600px;
-    margin: 0 auto;
-    background: white;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+/* オプション: テーブルのセルのスタイル */
+table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-h1 {
+table, th, td {
+    border: 1px solid black;
+    padding: 8px;
     text-align: center;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-label, input {
-    margin-bottom: 10px;
-}
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-#result {
-    margin-top: 20px;
 }
