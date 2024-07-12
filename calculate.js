@@ -1,31 +1,30 @@
 import Tabulator from 'tabulator-tables';
 
 // モンスターデータのCSV読み込み
-fetch('/content/モンスター(2024.7.11).csv')
+fetch('/data/モンスター(2024.7.11).csv')
     .then(response => response.text())
     .then(data => {
-        const df1 = Papa.parse(data, { header: true }).data;
+        const monsterData = Papa.parse(data, { header: true }).data;
 
         // ガンランスデータのCSV読み込み
-        fetch('/content/ガンランス(砲撃値).csv')
+        fetch('/data/ガンランス(砲撃値).csv')
             .then(response => response.text())
             .then(data => {
-                const df2 = Papa.parse(data, { header: true }).data;
+                const gunlanceData = Papa.parse(data, { header: true }).data;
 
                 // 砲術レベルに応じた補正値
                 const gunnery = [1.1, 1.15, 1.2, 1.3, 1.4];
 
                 // 溜め砲撃のダメージ計算
                 function calculateDamage(grade, gunneryLevel) {
-                    let damage = parseFloat(df2[grade - 1]['溜め砲撃']);
-                    damage *= gunnery[gunneryLevel - 1];
-                    return damage;
+                    const damage = gunlanceData[grade - 1]['放射型(溜め)'];
+                    return parseFloat(damage) * gunnery[gunneryLevel - 1];
                 }
 
                 // モンスターの討伐に必要な溜め砲撃数を計算
                 function calculateMonsterKillCount(grade, gunneryLevel, monsterName) {
                     const damage = calculateDamage(grade, gunneryLevel);
-                    const monster = df1.find(entry => entry['名前'] === monsterName);
+                    const monster = monsterData.find(entry => entry['名前'] === monsterName);
                     
                     if (!monster) {
                         console.log(`モンスター名 '${monsterName}' が見つかりませんでした。`);
@@ -58,7 +57,12 @@ fetch('/content/モンスター(2024.7.11).csv')
                             layout: 'fitColumns',
                             columns: [
                                 { title: '名前', field: '名前', headerFilter: true },
-                                { title: '星5～星10の討伐に必要な溜め砲撃数', field: '星5～星10の討伐に必要な溜め砲撃数', headerFilter: true }
+                                { title: '星5', field: '星5', headerFilter: true },
+                                { title: '星6', field: '星6', headerFilter: true },
+                                { title: '星7', field: '星7', headerFilter: true },
+                                { title: '星8', field: '星8', headerFilter: true },
+                                { title: '星9', field: '星9', headerFilter: true },
+                                { title: '星10', field: '星10', headerFilter: true }
                             ]
                         });
                     }
